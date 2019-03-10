@@ -244,15 +244,16 @@ ___
 ## Screenshots
 
 * Template List + `redcloud.py` deploy
-  
-  ![](https://i.imgur.com/j8YFjtw.png)
+![](https://i.imgur.com/j8YFjtw.png)
+
+* Deploying a container
+![](https://i.imgur.com/QCR1yHp.png)
+
 
 * Using Metasploit's `msfconsole` through the web-interface
 
+![](https://i.imgur.com/wUcFHbh.png)
 
-  ![](https://i.imgur.com/wUcFHbh.png)
-
-* Deploying a container todo
 
 ___
 
