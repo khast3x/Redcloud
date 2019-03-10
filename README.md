@@ -88,11 +88,18 @@ ___
 ```
 
 ```bash
+# Use python3 if default python version is 2.x
 > git clone https://github.com/khast3x/redcloud.git
 > cd redcloud
 > python --version
-# Use python3 if default python version is 2.x
 > python redcloud.py
+```
+
+Redcloud uses `PyYAML` to print the list of available templates. It's installed by default on most systems.  
+If not, simply run:
+```bash
+# Use pip3 if default python version is 2.x
+> pip install -r requirements
 ```
 
 The Redcloud menu offers 3 different deployment methods:
