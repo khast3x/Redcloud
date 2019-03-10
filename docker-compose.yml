@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+  cert_gen:
+    image: paulczar/omgwtfssl
+    volumes:
+    - /tmp/certs:/certs
+
+  proxy:
+    build: nginx/
+    container_name: "portainer-proxy"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes_from:
+      - cert_gen
+    volumes:
+      - files:/etc/nginx/html/files
+    restart: on-failure
+
+  templates:
+      build : nginx-templates/
+      container_name: "nginx-templates"
+      ports:
+        - "8080:80"
+      networks: 
+        - inside
+
+  portainer:
+    image: portainer/portainer
+    container_name: "portainer-app"
+    command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/lwVlWt2.jpg" --templates "http://nginx-templates/templates.yml"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/portainer/data:/data
+    networks:
+      - default
+      - inside
+
+  # tester:
+  #   image: nginx:latest
+  #   container_name: "tester"
+  #   networks:
+  #     - default
+  #     - inside
+
+volumes:
+  files:
+
+networks:
+  inside: 
