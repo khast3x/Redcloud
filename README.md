@@ -3,7 +3,8 @@
 
 *Weather report. Cloudy with a chance of shells!*  
 
-Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updated on Redcloud's development :information_desk_person::cloud::shell::seedling:
+Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updated on Redcloud's development  
+:information_desk_person::cloud::shell::seedling:
 
 ___
 
