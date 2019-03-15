@@ -46,6 +46,7 @@ ___
       - [Redcloud Architecture](#redcloud-architecture)
       - [Networks](#networks)
       - [Volumes](#volumes)
+      - [Accessing containers from the terminal](#accessing-containers-from-the-terminal)
       - [Accessing files](#accessing-files)
       - [SSL Certificates](#ssl-certificates)
       - [Stopping Redcloud](#stopping-redcloud)
