@@ -1,0 +1,27 @@
+defaultEntryPoints = ["http", "https"]
+logLevel = "DEBUG"
+[entryPoints.api]
+  address = ":8081"
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    # [entryPoints.http.redirect]
+    # entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      certFile = "/certs/cert.pem"
+      keyFile = "/certs/key.pem"
+      insecureSkipVerify = true
+
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "docker.localhost"
+exposedByDefault = false
+
+[api]
+  entryPoint = "api"
+
+

@@ -1,22 +1,21 @@
-version: '2'
+version: "3"
 
 services:
   cert_gen:
-    image: paulczar/omgwtfssl
-    volumes:
-    - /tmp/certs:/certs
+      image: paulczar/omgwtfssl
+      volumes:
+      - certs:/certs
 
-  proxy:
-    build: nginx/
-    container_name: "portainer-proxy"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes_from:
-      - cert_gen
-    volumes:
-      - files:/etc/nginx/html/files
-    restart: on-failure
+  traefik:
+      image: traefik:alpine
+      ports:
+      - 80:80
+      - 443:443
+      - 8081:8081
+      volumes:
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+      - certs:/certs
 
   templates:
       build : nginx-templates/
@@ -25,27 +24,44 @@ services:
         - "8080:80"
       networks: 
         - inside
-
+  
   portainer:
-    image: portainer/portainer
-    container_name: "portainer-app"
-    command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/lwVlWt2.jpg" --templates "http://nginx-templates/templates.yml"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/portainer/data:/data
-    networks:
-      - default
-      - inside
+      image: portainer/portainer
+      container_name: "portainer-app"
+      ports:
+        - "9000:9000"
+      networks:
+        - default
+        - inside
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /opt/portainer/data:/data
+      command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/lwVlWt2.jpg" --templates "http://nginx-templates/templates.yml"
 
-  # tester:
-  #   image: nginx:latest
-  #   container_name: "tester"
-  #   networks:
-  #     - default
-  #     - inside
-
+      labels:
+        - "traefik.frontend.rule=PathPrefixStrip:/portainer"
+        - "traefik.backend=portainer"
+        - "traefik.port=9000"
+        - "traefik.weight=10"
+        - "traefik.enable=true"
+        - "traefik.passHostHeader=true"
+        - "traefik.docker.network=default"
+        # - "traefik.frontend.entryPoints=http"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.backend.loadbalancer.method=drr"
+        # https://github.com/containous/traefik/issues/563#issuecomment-421360934
+        - "traefik.frontend.redirect.regex=^(.*)/portainer$$"
+        - "traefik.frontend.redirect.replacement=$$1/portainer/"
+        - "traefik.frontend.rule=PathPrefix:/portainer;ReplacePathRegex: ^/portainer/(.*) /$$1"
+  whoami:
+      image: emilevauge/whoami
+      labels:
+      - traefik.enable=true
+      - "traefik.frontend.rule=Host:whoami.docker.localhost"
+      volumes:
+      - certs:/certs
 volumes:
-  files:
-
+  certs:
 networks:
-  inside: 
+  inside:
+    external: false
