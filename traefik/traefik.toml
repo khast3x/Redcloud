@@ -11,6 +11,8 @@ logLevel = "DEBUG"
   address = ":443"
     [entryPoints.https.tls]
       [[entryPoints.https.tls.certificates]]
+      ca = "/certs/ca.pem"
+      caOptional = true
       certFile = "/certs/cert.pem"
       keyFile = "/certs/key.pem"
       insecureSkipVerify = true

@@ -7,15 +7,22 @@ services:
       - certs:/certs
 
   traefik:
-      image: traefik:alpine
+      # image: traefik:alpine
+      build: traefik/
       ports:
       - 80:80
       - 443:443
       - 8081:8081
       volumes:
-      - ./traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock
       - certs:/certs
+      # labels:
+      #   - "traefik.frontend.entryPoints=https"
+      #   - "traefik.frontend.rule=Path:/monitor"
+      #   - "traefik.backend=traefik"
+      #   - "traefik.port=8081"
+      #   - "traefik.enable=true"
+        
 
   templates:
       build : nginx-templates/
@@ -46,7 +53,7 @@ services:
         - "traefik.enable=true"
         - "traefik.passHostHeader=true"
         - "traefik.docker.network=default"
-        # - "traefik.frontend.entryPoints=http"
+        - "traefik.frontend.entryPoints=https"
         - "traefik.backend.loadbalancer.swarm=true"
         - "traefik.backend.loadbalancer.method=drr"
         # https://github.com/containous/traefik/issues/563#issuecomment-421360934
