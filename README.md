@@ -267,7 +267,8 @@ ___
 * If you wish to create a new username/password combo, remove Portainer persistent data on deployment candidate: `rm -rf /opt/portainer/data`
 * If you're running into python errors, you may need to install the `python3-distutils` package (use `apt-get install python3-distutils` on debian/ubuntu base)
 * If you're getting an error when deploying an App Template saying the "container name already exists", it's probably because you're trying to deploy the same App Template without having removing a previously deployed one. Simply remove the old container with the same name, or change the name of your new container.
-* If something seems wrong with your container, the standard procedure is to check the container's logs from the web-interface.
+* If something seems wrong with your container, the standard procedure is to check the container's logs from the web-interface.  
+* If running a local deployment on OSX, `portainer` will be unable to use its default volume location `/opt/`. To solve this, open the `docker-compose.yml` file, replace `/opt/portainer/data:/data` with a folder with write-access, for example: `/tmp/portainer/:/data` and create the `/tmp/portainer` directory before running Redcloud.
 
 
 ___
