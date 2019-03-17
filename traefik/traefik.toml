@@ -1,5 +1,12 @@
 defaultEntryPoints = ["http", "https"]
 logLevel = "DEBUG"
+
+[traefikLog]
+  filePath = "/logs/traefik.log"
+
+[accessLog]
+  filePath = "/logs/access.log"
+
 [entryPoints.api]
   address = ":8081"
 [entryPoints]

@@ -2,12 +2,14 @@ version: "3"
 
 services:
   cert_gen:
+      container_name: "cert-gen"
       image: paulczar/omgwtfssl
       volumes:
       - certs:/certs
 
   traefik:
       build: traefik/
+      container_name: "traefik"
       networks:
         - default
         - inside
@@ -18,6 +20,7 @@ services:
       volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - certs:/certs
+      - ./logs:/logs
 
         
 
@@ -38,9 +41,7 @@ services:
         - inside
       labels:
         - "traefik.frontend.rule=PathPrefixStrip:/files"
-        - "traefik.backend=public-files"
         - "traefik.port=80"
-        - "traefik.weight=10"
         - "traefik.enable=true"
   
   portainer:
@@ -56,13 +57,10 @@ services:
 
       labels:
         - "traefik.frontend.rule=PathPrefixStrip:/portainer"
-        - "traefik.backend=portainer"
         - "traefik.port=9000"
-        - "traefik.weight=10"
         - "traefik.enable=true"
         - "traefik.passHostHeader=true"
-        - "traefik.docker.network=default"
-        - "traefik.frontend.entryPoints=http, https"
+        - "traefik.docker.network=redcloud_default"
         - "traefik.backend.loadbalancer.swarm=true"
         - "traefik.backend.loadbalancer.method=drr"
         # https://github.com/containous/traefik/issues/563#issuecomment-421360934
