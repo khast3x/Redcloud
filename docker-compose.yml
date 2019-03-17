@@ -20,7 +20,12 @@ services:
       volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - certs:/certs
-      - ./logs:/logs
+      - logs:/logs
+      labels:
+      - "traefik.frontend.rule=PathPrefixStrip:/api"
+      - "traefik.frontend.auth.basic.usersFile=/etc/traefik/.htpasswd"
+      - "traefik.port=8081"
+
 
         
 
@@ -37,18 +42,17 @@ services:
       container_name: "public-files"
       volumes:
         - files:/var/www/
+        - logs:/var/www/logs
       networks:
         - inside
       labels:
         - "traefik.frontend.rule=PathPrefixStrip:/files"
         - "traefik.port=80"
-        - "traefik.enable=true"
   
   portainer:
       image: portainer/portainer
       container_name: "portainer-app"
       networks:
-        - default
         - inside
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
@@ -58,24 +62,18 @@ services:
       labels:
         - "traefik.frontend.rule=PathPrefixStrip:/portainer"
         - "traefik.port=9000"
-        - "traefik.enable=true"
         - "traefik.passHostHeader=true"
-        - "traefik.docker.network=redcloud_default"
+        - "traefik.docker.network=redcloud_inside"
         - "traefik.backend.loadbalancer.swarm=true"
         - "traefik.backend.loadbalancer.method=drr"
         # https://github.com/containous/traefik/issues/563#issuecomment-421360934
         - "traefik.frontend.redirect.regex=^(.*)/portainer$$"
         - "traefik.frontend.redirect.replacement=$$1/portainer/"
         - "traefik.frontend.rule=PathPrefix:/portainer;ReplacePathRegex: ^/portainer/(.*) /$$1"
-  whoami:
-      image: emilevauge/whoami
-      labels:
-      - traefik.enable=true
-      - "traefik.frontend.rule=Host:whoami.docker.localhost"
-      volumes:
-      - certs:/certs
+
 volumes:
   certs:
+  logs:
   files:
 networks:
   inside:

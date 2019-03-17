@@ -28,7 +28,7 @@ logLevel = "DEBUG"
 [docker]
 endpoint = "unix:///var/run/docker.sock"
 domain = "docker.localhost"
-exposedByDefault = false
+exposedByDefault = true
 
 [api]
   entryPoint = "api"
