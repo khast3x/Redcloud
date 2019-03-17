@@ -7,8 +7,10 @@ services:
       - certs:/certs
 
   traefik:
-      # image: traefik:alpine
       build: traefik/
+      networks:
+        - default
+        - inside
       ports:
       - 80:80
       - 443:443
@@ -23,15 +25,27 @@ services:
       build : nginx-templates/
       container_name: "nginx-templates"
       ports:
-        - "8080:80"
+        - "8090:80"
       networks: 
         - inside
+
+  public-files:
+      image: aikain/simplehttpserver:0.1
+      container_name: "public-files"
+      volumes:
+        - files:/var/www/
+      networks:
+        - inside
+      labels:
+        - "traefik.frontend.rule=PathPrefixStrip:/files"
+        - "traefik.backend=public-files"
+        - "traefik.port=80"
+        - "traefik.weight=10"
+        - "traefik.enable=true"
   
   portainer:
       image: portainer/portainer
       container_name: "portainer-app"
-      ports:
-        - "9000:9000"
       networks:
         - default
         - inside
@@ -64,6 +78,7 @@ services:
       - certs:/certs
 volumes:
   certs:
+  files:
 networks:
   inside:
     external: false
