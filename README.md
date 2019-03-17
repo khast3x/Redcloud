@@ -101,7 +101,7 @@ Redcloud uses `PyYAML` to print the list of available templates. It's installed 
 If not, simply run:
 ```bash
 # Use pip3 if default python version is 2.x
-> pip install -r requirements
+> pip install -r requirements.txt
 ```
 
 The Redcloud menu offers 3 different deployment methods:
