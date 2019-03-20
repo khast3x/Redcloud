@@ -71,9 +71,9 @@ The Redcloud menu offers 3 different deployment methods:
 1. **Locally**
 2. **Remotely, using ssh**. Requires having your public key in your target's `authorized_keys` file.
 3. **Remotely, using docker-machine**. Run the `eval (docker-machine env deploy_target)` line to preload your env with your docker-machine, and run `redcloud.py`. Redcloud should automatically detect your docker-machine, and highlight menu items relevant to a docker-machine deployment.
-
-
-![redcloud menu](https://i.imgur.com/2rdYzby.png)
+<p align="center">
+  <img src="https://i.imgur.com/2rdYzby.png" width="256" title="Redcloud menu">
+</p>
 
 **Redcloud deployment workflow is as follows:**
 1. Clone/Download Redcloud repository.
