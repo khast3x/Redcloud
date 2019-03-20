@@ -46,8 +46,12 @@ services:
       networks:
         - inside
       labels:
-        - "traefik.frontend.rule=PathPrefixStrip:/files"
-        - "traefik.port=80"
+        - "traefik.sec.frontend.rule=PathPrefixStrip:/files/logs"
+        - "traefik.sec.port=80"
+        - "traefik.sec.frontend.auth.basic.users=admin:$$apr1$$JWufnu2u$$jK16K8EczmfIBDk5p3xw6/"
+        - "traefik.nosec.frontend.rule=PathPrefixStrip:/files"
+        - "traefik.nosec.port=80"
+  
   
   portainer:
       image: portainer/portainer
