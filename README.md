@@ -239,7 +239,9 @@ Redcloud uses Portainer to orchestrate and interface with the Docker engine. Por
 Templates can be found in `./nginx-templates/templates.yml`. Portainer fetches the template file from a dedicated NGINX container (`nginx-templates`).
 
 ### Traefik reverse-proxy
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/containous/traefik/master/docs/content/assets/img/traefik.icon.png" title="gopher">
+</p>
  
 Traefik is a wonderful "cloud-native edge router". It has replaced the previous NGINX reverse-proxy setup.  
 A Traefik image is built during deployment, using the Dockerfile located in `traefik/Dockerfile`. It adds a `.htpasswd` with `admin:Redcloud` credentials.  
@@ -253,7 +255,8 @@ Authentications are based of the `.htaccess` data.
 
 From the Traefik api web interface, you can view your deployed routes, monitor health, as well as real time metrics. Its very neat.
 
-![gopher](https://raw.githubusercontent.com/containous/traefik/master/docs/content/assets/img/traefik.icon.png)  
+
+
 
 You can add additional labels that tell Traefik where to route traffic, using:
 * `traefik/traefik.toml` file
