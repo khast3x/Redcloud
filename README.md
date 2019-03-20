@@ -7,7 +7,6 @@ Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updat
 :information_desk_person::cloud::shell::seedling:
 
 ___
-Shortcuts:
 [Introduction](#introduction) - [Quick Start](#quick-start) - [Redcloud Architecture](#redcloud-architecture) - [Accessing containers from the terminal](#accessing-containers-from-the-terminal) - [Portainer App Templates](#portainer-app-templates)
     - [Traefik reverse-proxy](#traefik-reverse-proxy)
     - [Redcloud security considerations](#redcloud-security-considerations) - [Troubleshooting](#troubleshooting) - [Use-cases](#use-cases) - [Screenshots](#screenshots) - [Hosting Redcloud](#hosting-redcloud)  - [Inspirations & Shout-outs](#inspirations--shout-outs)
