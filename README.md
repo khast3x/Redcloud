@@ -7,9 +7,9 @@ Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updat
 :information_desk_person::cloud::shell::seedling:
 
 ___
-[Introduction](#introduction) - [Quick Start](#quick-start) - [Redcloud Architecture](#redcloud-architecture) - [Accessing containers from the terminal](#accessing-containers-from-the-terminal) - [Portainer App Templates](#portainer-app-templates)
-    - [Traefik reverse-proxy](#traefik-reverse-proxy)
-    - [Redcloud security considerations](#redcloud-security-considerations) - [Troubleshooting](#troubleshooting) - [Use-cases](#use-cases) - [Screenshots](#screenshots) - [Hosting Redcloud](#hosting-redcloud)  - [Inspirations & Shout-outs](#inspirations--shout-outs)
+ :small_orange_diamond: [Quick Start](#quick-start) :small_orange_diamond: [Redcloud Architecture](#redcloud-architecture)  :small_orange_diamond: [Accessing containers from the terminal](#accessing-containers-from-the-terminal)  :small_orange_diamond: [Portainer App Templates](#portainer-app-templates)
+     :small_orange_diamond: [Traefik reverse-proxy](#traefik-reverse-proxy)
+     :small_orange_diamond: [Redcloud security considerations](#redcloud-security-considerations)  :small_orange_diamond: [Troubleshooting](#troubleshooting)  :small_orange_diamond: [Use-cases](#use-cases)  :small_orange_diamond: [Screenshots](#screenshots)  :small_orange_diamond: [Hosting Redcloud](#hosting-redcloud)   :small_orange_diamond: [Inspirations & Shout-outs](#inspirations--shout-outs)  :small_orange_diamond:
 ___
 
 ## Introduction
@@ -77,6 +77,8 @@ The Redcloud menu offers 3 different deployment methods:
 2. **Remotely, using ssh**. Requires having your public key in your target's `authorized_keys` file.
 3. **Remotely, using docker-machine**. Run the `eval (docker-machine env deploy_target)` line to preload your env with your docker-machine, and run `redcloud.py`. Redcloud should automatically detect your docker-machine, and highlight menu items relevant to a docker-machine deployment.
 
+___
+
 **Demo**
 
 *The following demo showcases deployment of Redcloud through ssh, followed by Metasploit. We then look at Traefik and a live volume attached to Metasploit. Finally, we check that Metasploit's DB is functional with the web terminal, delete the container, and terminate Redcloud.*
@@ -130,8 +132,11 @@ ___
 
 Use the web UI to monitor, manage, and **interact with each container**. Use the snappy web terminal just as you would with yours. Create volumes, networks and port forwards using Portainer's simple UI.
 
-Use all your favorite tools and technics with the power of data-center-grade internet.
+Use all your favorite tools and technics with the power of data-center-grade internet :rocket::moon:
 
+___
+
+*In the following section, we'll be going more in-depth inside Redcloud's design concepts. You can get started without having to dive inside though.*
 ___
 
 * :book: **Table of contents**
@@ -168,8 +173,10 @@ ___
 * `portainer`: Portainer web interface.
 * `traefik`: Traefik reverse-proxy container to the web interface, api and files containers. Some templates have pre-configured routes for convenience. See the `templates.yml`. 
 * `templates`: python3 `http.server` container that feeds the App Templates. Lives in an "inside" network.
-* `cert_gen`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using best practices.
+* `cert_gen`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using common best practices.
 * https://your-server-ip/portainer: Redcloud Web interface once deployed.
+* https://your-server-ip/files: Redcloud `redcloud_files` volume. You can also access the `redcloud_log` container content, protected by the same `.htpasswd` as Traefik. Default credentials: `admin:Redcloud`
+* https://your-server-ip/api: Traefik reverse-proxy health monitoring page. Shows live stats about routes, backends, return codes. Will also show reverse-callback implant data if configured through Traefik.
 
 ### Networks
 
@@ -327,11 +334,11 @@ ___
 ## Use-cases
 
 * Create your personal pentest-lab, and practice your hacking skills with friends and colleagues.
-* Throw off the blue team by deploying honeypots. Can be one or one thousand honeypots thanks to containers!
-* Deploy Metasploit or Empire, generate payload, served with nginx files.
-* Launch Sniper, fetch logs using nginx files.
+* Protect your infrastructure using honeypots.
+* Deploy Metasploit or Empire, generate payload, served instantly through the `/files/` URI.
+* Launch Sniper, fetch logs using files.
 * Use the reverse proxy to cover Metasploit or Empire.
-* Use an xss scanner on Juice shop.
+* Perform your bug-bounty pipelines much faster than your competition.
 * Launch scans behind your own Tor socks proxy.
 * View .onion site using Tor socks + Ubuntu VNC.
 * Advanced OSINT with Spiderfoot and a Tor container as proxy.
@@ -359,6 +366,7 @@ Any help is appreciated. This is a side project, so it's probably missing a few 
 * Adding templates. Please keep it clean, and from the creator's docker hub repository if possible.
 * Adding documentation.
 * Detailing use cases in blog articles. I'll add links to blog posts here, so please be sure to contact me if you make one! :v:
+* Integrating Traefik with more templates. I'm currently having issues with the spiderfoot and ubuntu novnc for example.
 * Typos as issues. *(no pull requests please)*
 
 ___
@@ -385,8 +393,7 @@ ___
 * [HideNSeek](https://github.com/rmikehodges/hideNsneak) - Mike Hodges
 
 ___
-
-*Finally, I'd love to integrate Cobalt Strike. Unfortunately, I don't see myself having the funds to invest in a license, so if you know someone who knows someone, I'm all ears* :innocent:
+*Finally, if you wish to see your tool integrated, hit me up on Twitter. This project is maintained on my free time. Keep an eye out in the dev branch for upcoming features. If you're an Infosec student looking for something to put your hands in, *
 ___
 
 *If you wish to stay updated on this project:*

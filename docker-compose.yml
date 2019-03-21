@@ -6,6 +6,8 @@ services:
       image: paulczar/omgwtfssl
       volumes:
       - certs:/certs
+      labels:
+        - "traefik.enable=false"
 
   traefik:
       build: traefik/
@@ -33,6 +35,8 @@ services:
       container_name: "templates"
       networks: 
         - inside
+      labels:
+        - "traefik.enable=false"
 
   public-files:
       image: aikain/simplehttpserver:0.1
