@@ -10,7 +10,7 @@ DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/dow
 REDCLOUD_INSTALL_GIT = "git clone -b dev https://github.com/khast3x/redcloud.git"
 REDCLOUD_INSTALL_SCP = "scp -r ../redcloud {target}:~/"
 SSH_OR = " || echo \"error\""
-GET_IP = "curl -4 icanhazip.com"
+GET_IP = "curl -4 -s icanhazip.com"
 
 
 def print_banner(arg = ""):
@@ -144,6 +144,7 @@ def deploy_local():
         c.bad_news(c, "docker-compose installation not found")
         c.question_news(c, "Install docker-compose? [Y/n]")
         dockerq = input(">> ")
+        print(dockerq)
         if dockerq == "n":
             c.info_news(c, "Skipping...")
         else:
@@ -163,11 +164,14 @@ def deploy_local():
 
     # Start deploy
     c.good_news(c, "Deploying redcloud")
-    run_cmd_output(DOCKER_DEPLOY)
+    output = run_cmd_output(DOCKER_DEPLOY)
+    print(output)
     c.good_news(c, "Done")
     ip = run_cmd_output(GET_IP)
     print(c.bold + c.fg.green + "\n" + "=========================================================================" + c.reset)
     c.good_news(c, "Please find your running instance at https://" + ip +"/portainer")
+    c.info_news(c, "Files are available at https://" + ip + "/files")
+    c.info_news(c, "Live Reverse Proxy data is available at https://" + ip + "/api")
     print(c.bold + c.fg.green + "=========================================================================" + c.reset)
     print(c.bg.orange + "\n" + c.reset)
     input("\n- Press Enter to continue -")
@@ -248,6 +252,8 @@ def deploy_remote_ssh():
     ip = run_cmd_output(SSH_CMD + GET_IP)
     print(c.bold + c.fg.green + "\n" + "=========================================================================" + c.reset)
     c.good_news(c, "Please find your running instance at https://" + ip +"/portainer")
+    c.info_news(c, "Files are available at https://" + ip + "/files")
+    c.info_news(c, "Live reverse proxy data is available at https://" + ip + "/api")
     print(c.bold + c.fg.green + "=========================================================================" + c.reset)
     print(c.bg.purple + "\n" + c.reset)
     input("\n- Press Enter to continue -")
@@ -314,6 +320,8 @@ def deploy_dockermachine():
         ip = os.environ['DOCKER_HOST']
         print(c.bold + c.fg.green + "\n" + "=========================================================================" + c.reset)
         c.good_news(c, "Please find your running instance at https:" + ip.split(":")[1] +"/portainer")
+        c.info_news(c, "Files are available at https:" + ip.split(":")[1] + "/files")
+        c.info_news(c, "Live reverse proxy data is available at https:" + ip.split(":")[1] + "/api")
         print(c.bold + c.fg.green + "=========================================================================" + c.reset)
     print(c.bg.cyan + "\n" + c.reset)
     input("\n- Press Enter to continue -")
