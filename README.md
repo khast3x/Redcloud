@@ -1,5 +1,5 @@
 # Redcloud
-![](https://img.shields.io/badge/Python-3+-brightgreen.svg) [![](https://img.shields.io/badge/Usable_Templates-35-brightgreen.svg)](https://github.com/khast3x/redcloud/blob/master/nginx-templates/templates.yml) ![](https://img.shields.io/github/issues-raw/khast3x/redcloud.svg?style=social)
+![](https://img.shields.io/badge/Python-3+-brightgreen.svg) [![](https://img.shields.io/badge/Usable_Templates-35-brightgreen.svg)](https://github.com/khast3x/redcloud/blob/master/templates/templates.yml) ![](https://img.shields.io/github/issues-raw/khast3x/redcloud.svg?style=social)
 
 *Weather report. Cloudy with a chance of shells!*  
 
@@ -7,30 +7,37 @@ Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updat
 :information_desk_person::cloud::shell::seedling:
 
 ___
+ :small_orange_diamond: [Quick Start](#quick-start) :small_orange_diamond: [Redcloud Architecture](#redcloud-architecture)  :small_orange_diamond: [Accessing containers from the terminal](#accessing-containers-from-the-terminal)  :small_orange_diamond: [Portainer App Templates](#portainer-app-templates)
+     :small_orange_diamond: [Traefik reverse-proxy](#traefik-reverse-proxy)
+     :small_orange_diamond: [Redcloud security considerations](#redcloud-security-considerations)  :small_orange_diamond: [Troubleshooting](#troubleshooting)  :small_orange_diamond: [Use-cases](#use-cases)  :small_orange_diamond: [Screenshots](#screenshots)  :small_orange_diamond: [Hosting Redcloud](#hosting-redcloud)   :small_orange_diamond: [Inspirations & Shout-outs](#inspirations--shout-outs)  :small_orange_diamond:
+___
 
 ## Introduction
 
-Redcloud is a powerful and user-friendly toolbox for deploying a fully featured **Red Team Infrastructure** using Docker. Use and manage it with its [polished web interface](#screenshots).  
+Redcloud is a powerful and user-friendly toolbox for deploying a fully featured **Red Team Infrastructure** using Docker. Deploys in minutes. Use and manage it with its [polished web interface](#screenshots).  
 
 Ideal for your penetration tests, shooting ranges, red teaming and bug bounties!  
   
   
 Self-host your attack infrastructure painlessly, deploy your very own live, scalable and resilient offensive infrastructure in a matter of minutes.
 
+
+<p align="center">
+  <img src="https://i.imgur.com/2rdYzby.png" width="540" title="Redcloud menu">
+</p>
+
 ___
 
 
 ## Features
 
-* Deploy Redcloud locally and remotely using the built-in SSH functions, and even docker-machine.
-* Deploy Metasploit, Empire, GoPhish, a fully stacked Kali, and many other security tools using Portainer's sleek and a responsive web interface.
-* Use an NGINX reverse proxy, preconfigured for Metasploit and Empire reverse callbacks. *(under development)*
-* Use the cloud's full potential with Docker's underlying power. Easily manage a single server or a full swarm just the same. Distribute the load seamlessly.
-* Monitor and manage your infrastructure with just a few clicks.
-* Deploy redirections, socks or Tor proxy for all your tools. Spawn your maze, Docker's internal network capabilities take care of the complicated stuff.
+* Deploy Redcloud locally or remotely using the built-in SSH functions, and even docker-machine.
+* Deploy Metasploit, Empire, GoPhish, vulnerable targets, a fully stacked Kali, and many more with a few clicks.
+* Monitor and manage your infrastructure with a beautiful web interface.
+* Deploy redirections, socks or Tor proxy for all your tools.
 * Painless network management and volume sharing.
-* Use training environments. Build your own shooting range.
 * User and password management.
+* Web terminal 
 * Overall very comfy :hatching_chick:
 
 ___
@@ -44,14 +51,17 @@ ___
 
 # If deploying using docker-machine, and using a machine named "default"
 > eval (docker-machine env default)
+
+# Check your Python version
+# Use python3 if default python version is 2.x
+
+> python --version
+
 ```
 
 ```bash
-# Use python3 if default python version is 2.x
 > git clone https://github.com/khast3x/redcloud.git
 > cd redcloud
-> python --version
-
 > python redcloud.py
 ```
 
@@ -66,6 +76,17 @@ The Redcloud menu offers 3 different deployment methods:
 1. **Locally**
 2. **Remotely, using ssh**. Requires having your public key in your target's `authorized_keys` file.
 3. **Remotely, using docker-machine**. Run the `eval (docker-machine env deploy_target)` line to preload your env with your docker-machine, and run `redcloud.py`. Redcloud should automatically detect your docker-machine, and highlight menu items relevant to a docker-machine deployment.
+
+___
+
+**Demo**
+
+*The following demo showcases deployment of Redcloud through ssh, followed by Metasploit. We then look at Traefik and a live volume attached to Metasploit. Finally, we check that Metasploit's DB is functional with the web terminal, delete the container, and terminate Redcloud.*
+
+<p align="center">
+  <img src="https://i.imgur.com/oply6oR.gif" width="540" title="Redcloud menu">
+</p>
+
 
 **Redcloud deployment workflow is as follows:**
 1. Clone/Download Redcloud repository.
@@ -110,7 +131,11 @@ ___
 
 Use the web UI to monitor, manage, and **interact with each container**. Use the snappy web terminal just as you would with yours. Create volumes, networks and port forwards using Portainer's simple UI.
 
-Use all your favorite tools and technics with the power of data-center-grade internet.
+Use all your favorite tools and technics with the power of data-center-grade internet :rocket::moon:
+
+___
+
+*In the following section, we'll be going more in-depth inside Redcloud's design concepts. You can get started without having to dive inside though.*
 
 ___
 
@@ -128,6 +153,7 @@ ___
       - [SSL Certificates](#ssl-certificates)
       - [Stopping Redcloud](#stopping-redcloud)
       - [Portainer App Templates](#portainer-app-templates)
+      - [Traefik reverse-proxy](#traefik-reverse-proxy)
       - [Redcloud security considerations](#redcloud-security-considerations)
     - [Tested deployment candidates](#tested-deployment-candidates)
     - [Troubleshooting](#troubleshooting)
@@ -144,11 +170,14 @@ ___
 ### Redcloud Architecture
 
 * `redcloud.py`: Starts/Stops the Web interface and App Templates, using Docker and Portainer.
-* `portainer-app`: The main container with the Portainer web interface.
-* `portainer-proxy`: NGINX reverse-proxy container to the web interface. Can proxy Metasploit and Empire reverse shells. Auto-generates an https certificate.
-* `nginx-templates`: NGINX server container that feeds the App Templates. Lives in an "inside" network.
-* `redcloud_cert_gen_1`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using best practices.
+* `portainer`: Portainer web interface.
+* `traefik`: Traefik reverse-proxy container to the web interface, api and files containers. Some templates have pre-configured routes for convenience. See the `templates.yml`. 
+* `templates`: python3 `http.server` container that feeds the App Templates. Lives in an "inside" network.
+* `cert_gen`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using common best practices.
 * https://your-server-ip/portainer: Redcloud Web interface once deployed.
+* https://your-server-ip/files: Redcloud `redcloud_files` volume. You can also access the `redcloud_log` container content, protected by the same `.htpasswd` as Traefik. Default credentials: `admin:Redcloud`
+* https://your-server-ip/api: Traefik reverse-proxy health monitoring page. Shows live stats about routes, backends, return codes. Will also show reverse-callback implant data if configured through Traefik.
+
 
 ### Networks
 
@@ -157,10 +186,12 @@ You can create additional networks with different drivers, and attach your conta
 
 ### Volumes
 
-You can share data between containers by sharing volumes. Redcloud comes with 2 volumes:
+You can share data between containers by sharing volumes. Redcloud comes with 3 volumes:
 
 * `certs`: Container with the certificates generated by [omgwtfssl](https://github.com/paulczar/omgwtfssl).
-* `files`: Standard file sharing volume. For now, the files are available when browsing https://your-server-ip/, and are served by the NGINX reverse-proxy container directly from the `files` volume. A typical use-case is to attach the volume to a Metasploit container, generate your payload directly into the `files` volume. You can now serve your fresh payload directly through the NGINX file server.
+* `files`: Standard file sharing volume. For now, the files are available when browsing https://your-server-ip/files, and are served by the Traefik reverse-proxy container directly from the `files` volume. A typical use-case is to attach the volume to a Metasploit container, generate your payload directly into the `files` volume. You can now serve your fresh payload directly through the Traefik to file server route.
+* `logs`: Available for logs, served by the file-server too. Access requires basic auth. Default is `admin:Redcloud`.
+
 
 ### Accessing containers from the terminal
 
@@ -209,10 +240,10 @@ The certificate is generated by [omgwtfssl](https://github.com/paulczar/omgwtfss
 Once generated:
 > It will dump the certificates it generated into /certs by default and will also output them to stdout in a standard YAML form, making them easy to consume in Ansible or other tools that use YAML. 
 
-Certificates are stored in a shared docker volume called `certs`. Your containers can access this volume if you indicate it in "+ Advanced Settings" when deploying it. The NGINX reverse-proxy container fetches the certificates directly from its configuration file. If you wish to replace these certificates with your own, simply replace them on this volume.
+Certificates are stored in a shared docker volume called `certs`. Your containers can access this volume if you indicate it in "+ Advanced Settings" when deploying it. The Traefik reverse-proxy container fetches the certificates directly from its configuration file. If you wish to replace these certificates with your own, simply replace them on this volume.
 
 It also means you can share the generated certificates into other containers, such Empire or Metasploit for your reverse callbacks, or for a phishing campaign.
-Most SSL related configurations can be found in `nginx/config/portainer.conf` or the `docker-compose.yml` file.
+Most SSL related configurations can be found in `traefik/traefik.toml` or the `docker-compose.yml` file.
 
 
 ### Stopping Redcloud
@@ -226,16 +257,46 @@ The *local* and *docker-machine* stop option is the same, thus they are combined
 ### Portainer App Templates
 
 Redcloud uses Portainer to orchestrate and interface with the Docker engine. Portainer in itself is a fantastic project to manage Docker deployments remotely. Portainer also includes a very convenient [template system](https://portainer.readthedocs.io/en/stable/templates.html), which is the major component for our Redcloud deployment.  
-Templates can be found in `./nginx-templates/templates.yml`. Portainer fetches the template file from a dedicated NGINX container (`nginx-templates`).
+Templates can be found in `./templates/templates.yml`. Portainer fetches the template file from a dedicated NGINX container (`templates`).
+
+### Traefik reverse-proxy
+Traefik is a wonderful "cloud-native edge router". It has replaced the previous NGINX reverse-proxy setup.  
+A Traefik image is built during deployment, using the Dockerfile located in `traefik/Dockerfile`. It adds a `.htpasswd` with `admin:Redcloud` credentials.  
+
+By default, deployment spawns the following routes:  
+* `https://your-server-ip/portainer`
+* `https://your-server-ip/files`
+* `https://your-server-ip/api`
+
+Authentications are based of the `.htaccess` data.
+
+From the Traefik api web interface, you can view your deployed routes, monitor health, as well as real time metrics. Its very neat.
 
 
+
+
+You can add additional labels that tell Traefik where to route traffic, using:
+* `traefik/traefik.toml` file
+* `docker-compose.yml` file
+* `templates.yml` file
+* Portainer's web interface
+
+ See the [official documentation](https://docs.traefik.io/basics/) for more information.
+
+![api](https://i.imgur.com/gWaeykt.png)
+
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/containous/traefik/master/docs/content/assets/img/traefik.icon.png" title="gopher">
+</p>
+ 
 ### Redcloud security considerations
 
 Redcloud deploys with a self-signed https certificate, and proxies all interactions with the web console through it.  
 However, the default network exposes your containers' ports to the outside world.
 
 You can:
-* Add custom `Location` blocks in the NGINX configuration.
+* Add custom `labels` to create routes with Traefik. See the `docker-compose.yml` file for inspiration.
 * Start an Ubuntu+noVNC (VNC through http) from template, add it to both an "inside" and "outside" network, and access exposed interfaces from inside.
 * Add .htaccess configurations. Some are planned in further Redcloud development.
 
@@ -269,17 +330,17 @@ ___
 * If you get an error when deploying an App Template saying the "container name already exists", it's probably because you're trying to deploy the same App Template without having removed a previously deployed one. Simply remove the old container with the same name, or change the name of your new container.
 * If something seems wrong with your container, the standard procedure is to check the container's logs from the web interface.
 * If running a local deployment on OSX, `portainer` will be unable to use its default volume location `/opt/`. To solve this, open the `docker-compose.yml` file, replace `/opt/portainer/data:/data` with a folder with write-access, for example: `/tmp/portainer/:/data` and create the `/tmp/portainer` directory before running Redcloud.
-
+* if you're getting issues with the web terminal, try disabling some addons, using private browsing, or try with a different browser. If all else fails, connect to your container [through the terminal](#accessing-containers-from-the-terminal).
 ___
 
 ## Use-cases
 
 * Create your personal pentest-lab, and practice your hacking skills with friends and colleagues.
-* Throw off the blue team by deploying honeypots. Can be one or one thousand honeypots thanks to containers!
-* Deploy Metasploit or Empire, generate payload, served with nginx files.
-* Launch Sniper, fetch logs using nginx files.
+* Protect your infrastructure using honeypots.
+* Deploy Metasploit or Empire, generate payload, served instantly through the `/files/` URI.
+* Launch Sniper, fetch logs using files.
 * Use the reverse proxy to cover Metasploit or Empire.
-* Use an xss scanner on Juice shop.
+* Perform your bug-bounty pipelines much faster than your competition.
 * Launch scans behind your own Tor socks proxy.
 * View .onion site using Tor socks + Ubuntu VNC.
 * Advanced OSINT with Spiderfoot and a Tor container as proxy.
@@ -307,6 +368,7 @@ Any help is appreciated. This is a side project, so it's probably missing a few 
 * Adding templates. Please keep it clean, and from the creator's docker hub repository if possible.
 * Adding documentation.
 * Detailing use cases in blog articles. I'll add links to blog posts here, so please be sure to contact me if you make one! :v:
+* Integrating Traefik with more templates. I'm currently having issues with the spiderfoot and ubuntu novnc for example.
 * Typos as issues. *(no pull requests please)*
 
 ___
@@ -333,8 +395,8 @@ ___
 * [HideNSeek](https://github.com/rmikehodges/hideNsneak) - Mike Hodges
 
 ___
+*Finally, if you wish to see your tool integrated, hit me up on Twitter. This project is maintained on my free time. Keep an eye out in the dev branch for upcoming features. If you're an Infosec student looking for something to put your hands in, *
 
-*Finally, I'd love to integrate Cobalt Strike. Unfortunately, I don't see myself having the funds to invest in a license, so if you know someone who knows someone, I'm all ears* :innocent:
 ___
 
 *If you wish to stay updated on this project:*

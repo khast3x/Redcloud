@@ -1,0 +1,37 @@
+defaultEntryPoints = ["http", "https"]
+logLevel = "DEBUG"
+
+[traefikLog]
+  filePath = "/logs/traefik.log"
+
+[accessLog]
+  filePath = "/logs/access.log"
+
+[entryPoints.api]
+  address = ":8081"
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+    rule = "Path:/portainer,/files,/api"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      ca = "/certs/ca.pem"
+      caOptional = true
+      certFile = "/certs/cert.pem"
+      keyFile = "/certs/key.pem"
+      insecureSkipVerify = true
+
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "docker.localhost"
+exposedByDefault = true
+
+[api]
+  entryPoint = "api"
+
+

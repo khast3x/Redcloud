@@ -27,6 +27,10 @@
     "image": "phocean/msf",
     "restart_policy": "unless-stopped",
     "categories": ["offensive", "database", "stack"],
+    "labels": [
+    { "name": "traefik.frontend.rule", "value": "PathPrefixStrip:/msf" },
+    { "name": "traefik.port", "value": "4444" }
+      ],
     "ports": [
       "4444:4444/tcp"
       ]
@@ -46,7 +50,12 @@
     "categories": ["offensive"],
     "ports": [
       "5555:5555/tcp"      
+      ],
+    "labels": [
+    { "name": "traefik.frontend.rule", "value": "PathPrefixStrip:/empire" },
+    { "name": "traefik.port", "value": "5555" }
       ]
+    
   },
   {
     "type": 1,
@@ -105,7 +114,7 @@
       ]
   },
   {
-    "type": 1,
+    "type": 1,  
     "platform": "linux",
     "network": "redcloud_default",
     "title": "Kali - Full",
@@ -161,14 +170,14 @@
     "description": "Open-Source Phishing Toolkit",
     "name": "red_gophish",
     "logo": "https://i.imgur.com/l21Rn2v.png",
-    "note": "In your browser, head over to https://your-docker-machine-ip:3333. Don't forget the S in https",
+    "note": "In your browser, head over to https://your-docker-machine-ip:3333. Don't forget the S in https. Default credentials: admin/gophish",
     "image": "matteoggl/gophish",
     "restart_policy": "unless-stopped",
     "categories": ["offensive", "phishing"],
     "ports": [
       "3333:3333/tcp",
       "8083:80/tcp"
-      ]
+      ]    
   },
   {  
     "type": 1,
@@ -236,7 +245,7 @@
     "ports": [
       "5901:5901/tcp",
       "6901:6901/tcp"
-      ]
+      ]    
   },
   {
     "type": 1,
@@ -252,7 +261,7 @@
     "categories": ["vulnerable", "webserver"],
     "ports": [
       "8082:80/tcp"
-    ]
+    ]    
   },
   {   
     "type": 1,
@@ -268,7 +277,7 @@
     "categories": ["vulnerable", "webserver"],
     "ports": [
       "8084:3000/tcp"
-    ]
+    ]    
   },
   {   
     "type": 1,
