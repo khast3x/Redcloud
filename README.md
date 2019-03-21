@@ -82,7 +82,7 @@ The Redcloud menu offers 3 different deployment methods:
 *The following demo showcases deployment of Redcloud through ssh, followed by Metasploit. We then look at Traefik and a live volume attached to Metasploit. Finally, we check that Metasploit's DB is functional with the web terminal, delete the container, and terminate Redcloud.*
 
 <p align="center">
-<video src="https://i.imgur.com/DlAY6r9.mp4" poster="https://i.imgur.com/2rdYzby.png" width="540" controls preload></video>
+<video src="https://i.imgur.com/DlAY6r9.gif" poster="https://i.imgur.com/2rdYzby.png" width="540" controls preload></video>
 </p>
 
 
