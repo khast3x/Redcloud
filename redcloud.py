@@ -96,7 +96,8 @@ def install_docker(prefix = ""):
     Runs the command to install docker. Can run with the SSH prefix to install remotly
     Keep both seperated for later debugging
     '''
-    c.info_news(c. "This might take a few minutes... Hang in there!")
+    c.info_news(c, "This might take a few minutes... Hang in there!")
+
     if len(prefix) != 0:
         output = run_cmd_output(prefix + DOCKER_INSTALL)
     else:
