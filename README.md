@@ -328,7 +328,7 @@ ___
 * If you get an error when deploying an App Template saying the "container name already exists", it's probably because you're trying to deploy the same App Template without having removed a previously deployed one. Simply remove the old container with the same name, or change the name of your new container.
 * If something seems wrong with your container, the standard procedure is to check the container's logs from the web interface.
 * If running a local deployment on OSX, `portainer` will be unable to use its default volume location `/opt/`. To solve this, open the `docker-compose.yml` file, replace `/opt/portainer/data:/data` with a folder with write-access, for example: `/tmp/portainer/:/data` and create the `/tmp/portainer` directory before running Redcloud.
-
+* if you're getting issues with the web terminal, try disabling some addons, using private browsing, or try with a different browser. If all else fails, connect to your container [through the terminal](#accessing-containers-from-the-terminal).
 ___
 
 ## Use-cases
