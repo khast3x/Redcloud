@@ -1,4 +1,4 @@
-
+ or
 <h1 align="center">
   <br>
   Redcloud
@@ -348,7 +348,7 @@ ___
 
 * Create your personal pentest-lab, and practice your hacking skills with friends and colleagues.
 * Protect your offensive infrastructure using honeypots.
-* Recreate a APT infrastructure with reverse implant load-balancing, server geo-stretching and multi-layered operations
+* Recreate an APT infrastructure with reverse implant load-balancing, geo-stretched servers and multi-layered operations
 * Automate payload generation with Metasploit or Empire, AV bypass with gscript, served instantly through the `/files/` URI.
 * Perform your bug-bounty pipelines much faster than your competition.
   * Launch Sniper using Portainer api when a new bug-bounty is posted, fetch logs using `/files/` URI.
