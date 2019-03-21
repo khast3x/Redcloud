@@ -1,13 +1,25 @@
-# Redcloud
+
+<h1 align="center">
+  <br>
+  Redcloud
+</h1>
+
+<h4 align="center">
+  <i>Weather report. Cloudy with a chance of shells!</i> 
+  <br>
+  <br>
+
+</h4>
+
+
 ![](https://img.shields.io/badge/Python-3+-brightgreen.svg) [![](https://img.shields.io/badge/Usable_Templates-35-brightgreen.svg)](https://github.com/khast3x/redcloud/blob/master/templates/templates.yml) ![](https://img.shields.io/github/issues-raw/khast3x/redcloud.svg?style=social)
 
-*Weather report. Cloudy with a chance of shells!*  
 
-Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updated on Redcloud's development   
+Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updated on Redcloud's development.   
 :information_desk_person::cloud::shell::seedling:
 
 ___
- :small_orange_diamond: [Quick Start](#quick-start) :small_orange_diamond: [Redcloud Architecture](#redcloud-architecture)  :small_orange_diamond: [Accessing containers from the terminal](#accessing-containers-from-the-terminal)  :small_orange_diamond: [Portainer App Templates](#portainer-app-templates)
+ :small_orange_diamond: [Quick Start](#quick-start) :small_orange_diamond: [Redcloud architecture](#redcloud-architecture)  :small_orange_diamond: [Accessing containers from the terminal](#accessing-containers-from-the-terminal)  :small_orange_diamond: [Portainer App Templates](#portainer-app-templates)
      :small_orange_diamond: [Traefik reverse-proxy](#traefik-reverse-proxy)
      :small_orange_diamond: [Redcloud security considerations](#redcloud-security-considerations)  :small_orange_diamond: [Troubleshooting](#troubleshooting)  :small_orange_diamond: [Use-cases](#use-cases)  :small_orange_diamond: [Screenshots](#screenshots)  :small_orange_diamond: [Hosting Redcloud](#hosting-redcloud)   :small_orange_diamond: [Inspirations & Shout-outs](#inspirations--shout-outs)  :small_orange_diamond:
 ___
@@ -44,7 +56,7 @@ ___
 
 ## Quick Start
 
-
+Setup
 ```bash
 # If deploying using ssh
 > cat ~/.ssh/id_rsa.pub | ssh root@your-deploy-target-ip 'cat >> .ssh/authorized_keys'
@@ -57,7 +69,7 @@ ___
 > python --version
 
 ```
-
+Deploy
 ```bash
 > git clone https://github.com/khast3x/redcloud.git
 > cd redcloud
@@ -335,11 +347,12 @@ ___
 ## Use-cases
 
 * Create your personal pentest-lab, and practice your hacking skills with friends and colleagues.
-* Protect your infrastructure using honeypots.
-* Deploy Metasploit or Empire, generate payload, served instantly through the `/files/` URI.
-* Launch Sniper, fetch logs using files.
-* Use the reverse proxy to cover Metasploit or Empire.
+* Protect your offensive infrastructure using honeypots.
+* Recreate a APT infrastructure with reverse implant load-balancing, server geo-stretching and multi-layered operations
+* Automate payload generation with Metasploit or Empire, AV bypass with gscript, served instantly through the `/files/` URI.
 * Perform your bug-bounty pipelines much faster than your competition.
+  * Launch Sniper using Portainer api when a new bug-bounty is posted, fetch logs using `/files/` URI.
+* Use the reverse proxy to cover Metasploit or Empire.
 * Launch scans behind your own Tor socks proxy.
 * View .onion site using Tor socks + Ubuntu VNC.
 * Advanced OSINT with Spiderfoot and a Tor container as proxy.
@@ -394,7 +407,8 @@ ___
 * [HideNSeek](https://github.com/rmikehodges/hideNsneak) - Mike Hodges
 
 ___
-*Finally, if you wish to see your tool integrated, hit me up on Twitter. This project is maintained on my free time. Keep an eye out in the dev branch for upcoming features. If you're an Infosec student looking for something to put your hands in, *
+*Finally, if you wish to see your tool integrated, hit me up on Twitter. This project is maintained on my free time. Keep an eye out in the dev branch for upcoming features.  
+Redcloud was originally developed to make deploying training environments for infosec students easier.*
 
 ___
 
