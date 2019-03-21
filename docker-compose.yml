@@ -16,7 +16,6 @@ services:
       ports:
       - 80:80
       - 443:443
-      - 8081:8081
       volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - certs:/certs
@@ -30,10 +29,8 @@ services:
         
 
   templates:
-      build : nginx-templates/
-      container_name: "nginx-templates"
-      ports:
-        - "8090:80"
+      build : templates/
+      container_name: "templates"
       networks: 
         - inside
 
@@ -61,7 +58,7 @@ services:
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - /opt/portainer/data:/data
-      command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/lwVlWt2.jpg" --templates "http://nginx-templates/templates.yml"
+      command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/lwVlWt2.jpg" --templates "http://templates/templates.yml"
 
       labels:
         - "traefik.frontend.rule=PathPrefixStrip:/portainer"

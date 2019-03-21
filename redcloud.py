@@ -79,7 +79,7 @@ def list_available():
     '''
     import yaml
 
-    with open("nginx-templates/templates.yml", 'r') as stream:
+    with open("templates/templates.yml", 'r') as stream:
         try:
             data = yaml.load(stream)
             for templ in data:

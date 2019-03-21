@@ -1,5 +1,5 @@
 # Redcloud
-![](https://img.shields.io/badge/Python-3+-brightgreen.svg) [![](https://img.shields.io/badge/Usable_Templates-35-brightgreen.svg)](https://github.com/khast3x/redcloud/blob/master/nginx-templates/templates.yml) ![](https://img.shields.io/github/issues-raw/khast3x/redcloud.svg?style=social)
+![](https://img.shields.io/badge/Python-3+-brightgreen.svg) [![](https://img.shields.io/badge/Usable_Templates-35-brightgreen.svg)](https://github.com/khast3x/redcloud/blob/master/templates/templates.yml) ![](https://img.shields.io/github/issues-raw/khast3x/redcloud.svg?style=social)
 
 *Weather report. Cloudy with a chance of shells!*  
 
@@ -155,8 +155,8 @@ ___
 * `redcloud.py`: Starts/Stops the Web interface and App Templates, using Docker and Portainer.
 * `portainer`: Portainer web interface.
 * `traefik`: Traefik reverse-proxy container to the web interface, api and files containers. Some templates have pre-configured routes for convenience. See the `templates.yml`. 
-* `nginx-templates`: NGINX server container that feeds the App Templates. Lives in an "inside" network.
-* `redcloud_cert_gen_1`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using best practices.
+* `templates`: python3 `http.server` container that feeds the App Templates. Lives in an "inside" network.
+* `cert_gen`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using best practices.
 * https://your-server-ip/portainer: Redcloud Web interface once deployed.
 
 ### Networks
@@ -236,13 +236,9 @@ The *local* and *docker-machine* stop option is the same, thus they are combined
 ### Portainer App Templates
 
 Redcloud uses Portainer to orchestrate and interface with the Docker engine. Portainer in itself is a fantastic project to manage Docker deployments remotely. Portainer also includes a very convenient [template system](https://portainer.readthedocs.io/en/stable/templates.html), which is the major component for our Redcloud deployment.  
-Templates can be found in `./nginx-templates/templates.yml`. Portainer fetches the template file from a dedicated NGINX container (`nginx-templates`).
+Templates can be found in `./templates/templates.yml`. Portainer fetches the template file from a dedicated NGINX container (`templates`).
 
 ### Traefik reverse-proxy
-<p align="center">
-  <img src="https://raw.githubusercontent.com/containous/traefik/master/docs/content/assets/img/traefik.icon.png" title="gopher">
-</p>
- 
 Traefik is a wonderful "cloud-native edge router". It has replaced the previous NGINX reverse-proxy setup.  
 A Traefik image is built during deployment, using the Dockerfile located in `traefik/Dockerfile`. It adds a `.htpasswd` with `admin:Redcloud` credentials.  
 
@@ -269,6 +265,10 @@ You can add additional labels that tell Traefik where to route traffic, using:
 ![api](https://i.imgur.com/gWaeykt.png)
 
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/containous/traefik/master/docs/content/assets/img/traefik.icon.png" title="gopher">
+</p>
+ 
 ### Redcloud security considerations
 
 Redcloud deploys with a self-signed https certificate, and proxies all interactions with the web console through it.  

@@ -177,12 +177,7 @@
     "ports": [
       "3333:3333/tcp",
       "8083:80/tcp"
-      ],
-    "labels": [
-    { "name": "traefik.frontend.rule", "value": "PathPrefixStrip:/gophish" },
-    { "name": "traefik.port", "value": "80" }
-      ]
-    
+      ]    
   },
   {  
     "type": 1,
@@ -214,12 +209,7 @@
     "categories": ["offensive", "osint"],
     "ports": [
       "5001:5001/tcp"
-    ],
-    "labels": [
-    { "name": "traefik.frontend.rule", "value": "PathPrefixStrip:/spf" },
-    { "name": "traefik.port", "value": "5001" }
-      ]
-    
+    ]
   },
   {
     "type": 1,
@@ -255,14 +245,7 @@
     "ports": [
       "5901:5901/tcp",
       "6901:6901/tcp"
-      ],
-    "labels": [
-    { "name": "traefik.frontend.rule", "value": "PathPrefixStrip:/ubvnc" },
-    { "name": "traefik.port", "value": "6901" },
-    { "name": "traefik.frontend.rule", "value": "AddPrefix: /ubvnc" }
-    
-      ]
-    
+      ]    
   },
   {
     "type": 1,
@@ -278,12 +261,7 @@
     "categories": ["vulnerable", "webserver"],
     "ports": [
       "8082:80/tcp"
-    ],
-    "labels": [
-    { "name": "traefik.frontend.rule", "value": "PathPrefixStrip:/dvwa" },
-    { "name": "traefik.port", "value": "80" }
-      ]
-    
+    ]    
   },
   {   
     "type": 1,
@@ -299,12 +277,7 @@
     "categories": ["vulnerable", "webserver"],
     "ports": [
       "8084:3000/tcp"
-    ],
-    "labels": [
-    { "name": "traefik.frontend.rule", "value": "PathPrefixStrip:/juiceshop" },
-    { "name": "traefik.port", "value": "3000" }
-      ]
-    
+    ]    
   },
   {   
     "type": 1,
