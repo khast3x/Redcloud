@@ -31,9 +31,15 @@ Ideal for your penetration tests, shooting ranges, red teaming and bug bounties!
 Self-host your attack infrastructure painlessly, deploy your very own live, scalable and resilient offensive infrastructure in a matter of minutes.
 
 
+**Demo**
+
 <p align="center">
-  <img src="https://i.imgur.com/2rdYzby.png" width="540" title="Redcloud menu">
+  <img src="https://i.imgur.com/oply6oR.gif" width="540" title="Redcloud menu">
 </p>
+
+*The following demo showcases deployment of Redcloud through ssh, followed by Metasploit. We then look at Traefik and a live volume attached to Metasploit. Finally, we check that Metasploit's DB is functional with the web terminal, delete the container, and terminate Redcloud.*
+
+
 
 ___
 
@@ -87,14 +93,9 @@ The Redcloud menu offers 3 different deployment methods:
 
 ___
 
-**Demo**
-
-*The following demo showcases deployment of Redcloud through ssh, followed by Metasploit. We then look at Traefik and a live volume attached to Metasploit. Finally, we check that Metasploit's DB is functional with the web terminal, delete the container, and terminate Redcloud.*
-
 <p align="center">
-  <img src="https://i.imgur.com/oply6oR.gif" width="540" title="Redcloud menu">
+  <img src="https://i.imgur.com/2rdYzby.png" width="540" title="Redcloud menu">
 </p>
-
 
 **Redcloud deployment workflow is as follows:**
 1. Clone/Download Redcloud repository.
