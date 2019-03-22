@@ -72,7 +72,7 @@ Setup:
 > eval (docker-machine env default)
 
 # Check your Python version
-# Use python3 if default python version is 2.xRed Team
+# Use python3 if default python version is 2.x
 > python --version
 
 ```
