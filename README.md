@@ -63,7 +63,7 @@ ___
 
 ## Quick Start
 
-Setup
+Setup:
 ```bash
 # If deploying using ssh
 > cat ~/.ssh/id_rsa.pub | ssh root@your-deploy-target-ip 'cat >> .ssh/authorized_keys'
@@ -76,7 +76,7 @@ Setup
 > python --version
 
 ```
-Deploy
+Deploy:
 ```bash
 > git clone https://github.com/khast3x/redcloud.git
 > cd redcloud
