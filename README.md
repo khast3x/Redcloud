@@ -18,9 +18,7 @@ Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updat
 :information_desk_person::cloud::shell::seedling:
 
 ___
- :small_orange_diamond: [Quick Start](#quick-start) :small_orange_diamond: [Redcloud architecture](#redcloud-architecture)  :small_orange_diamond: [Accessing containers from the terminal](#accessing-containers-from-the-terminal)  :small_orange_diamond: [Portainer App Templates](#portainer-app-templates)
-     :small_orange_diamond: [Traefik reverse-proxy](#traefik-reverse-proxy)
-     :small_orange_diamond: [Redcloud security considerations](#redcloud-security-considerations)  :small_orange_diamond: [Troubleshooting](#troubleshooting)  :small_orange_diamond: [Use-cases](#use-cases)  :small_orange_diamond: [Screenshots](#screenshots)  :small_orange_diamond: [Hosting Redcloud](#hosting-redcloud)   :small_orange_diamond: [Inspirations & Shout-outs](#inspirations--shout-outs)  :small_orange_diamond:
+ :small_orange_diamond: [Quick Start](#quick-start) :small_orange_diamond: [Redcloud architecture](#redcloud-architecture) :small_orange_diamond: [Use-cases](#use-cases)  :small_orange_diamond: [Screenshots](#screenshots) :small_orange_diamond:
 ___
 
 ## Introduction
@@ -129,7 +127,7 @@ ___
 
 **Briefly,**
 
-`redcloud.py` deploys a [Portainer](https://www.portainer.io/) stack, **preloaded with many tool templates for your offensive engagements**, powered by Docker. Once deployed, use the [web interface](#screenshots) to manage it. Easy remote deploy to your target server using the system `ssh` or even `docker-machine` if that's your thing.
+`redcloud.py` deploys a [Portainer](https://www.portainer.io/) stack, **preloaded with many tool templates for your offensive engagements**, powered by Docker. Once deployed, use the [web interface](#screenshots) to manage it. Uses [Traefik](https://traefik.io/) as reverse-proxy. Easy remote deploy to your target server using the system `ssh` and even `docker-machine`. 
   
 
 * :rocket: Ever wanted to spin up a Kali in a cloud with just a few clicks?  
@@ -141,7 +139,7 @@ ___
 
 Use the web UI to monitor, manage, and **interact with each container**. Use the snappy web terminal just as you would with yours. Create volumes, networks and port forwards using Portainer's simple UI.
 
-Use all your favorite tools and technics with the power of data-center-grade internet :rocket::moon:
+Use all your favorite tools and technics with the power of data-center-grade internet :rocket:
 
 ___
 
