@@ -194,6 +194,20 @@
     "categories": ["offensive", "evasion"],
     "volumes": [{"container": "/root/share"}]
   },
+  {  
+    "type": 1,
+    "title": "aquatone",
+    "platform": "linux",
+    "network": "redcloud_default",
+    "description": "A Tool for Domain Flyovers. This image contains the golang version",
+    "interactive": true,
+    "name": "red_aquatone",
+    "logo": "https://i.imgur.com/xB8oyq8.jpg",
+    "note": "This docker image does not recompile Aquatone or Chromium, it installs the binaries of each.",
+    "image": "youngderekm/aquatone",
+    "restart_policy": "unless-stopped",
+    "categories": ["offensive", "recon"]
+  },
   {
     "type": 1,
     "title": "Spiderfoot",
@@ -293,6 +307,20 @@
     "restart_policy": "unless-stopped",
     "categories": ["utils", "privacy"]
   },
+{   
+    "type": 1,
+    "title": "Hulk DoS",
+    "platform": "linux",
+    "network": "redcloud_default",
+    "description": "HULK DoS tool ported to Go with some additional features",
+    "interactive": true,
+    "name": "red_hulk",
+    "logo": "https://i.imgur.com/sIu0BKe.jpg",
+    "note": "This tool targeted for stress testing and may really down badly configured server or badly made app. Use it carefully.",
+    "image": "koroglu/hulk",
+    "restart_policy": "unless-stopped",
+    "categories": ["utils", "offensive"]
+},
 {
     "type": 1,
     "title": "SoftEtherVPN",
