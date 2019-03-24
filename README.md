@@ -98,8 +98,79 @@ Redcloud has 3 different deployment methods:
 ___
 
 <p align="center">
-  <img src="https://i.imgur.com/2rdYzby.png" width="540" title="Redcloud menu">
+  <img src="https://i.imgur.com/W3nTrpF.png" width="540" title="Redcloud menu">
 </p>
+
+<p align="center">
+  <img src="https://i.imgur.com/8ndvrpq.png" width="540" title="Redcloud templates">
+</p>
+
+___
+
+**Briefly,**
+
+`redcloud.py` deploys a [Portainer](https://www.portainer.io/) stack, **preloaded with many tool templates for your offensive engagements**, powered by Docker. Once deployed, use the [web interface](#screenshots) to manage it. Uses [Traefik](https://traefik.io/) as reverse-proxy. Easy remote deploy to your target server using the system `ssh` and even `docker-machine`. 
+  
+
+* :rocket: Ever wanted to spin up a Kali in a cloud with just a few clicks?  
+* :package: Have clean silos between your tools, technics and stages?  
+* :ambulance: Monitor the health of your scans and C2?  
+* :fire: Skip those sysadmin tasks for setting up a phishing campaign and get pwning faster?  
+* :smiling_imp: Curious how you would build *the* ideal attack infrastructure?
+
+
+Use the web UI to monitor, manage, and **interact with each container**. Use the snappy web terminal just as you would with yours. Create volumes, networks and port forwards using Portainer's simple UI.
+
+Use all your favorite tools and technics with the power of data-center-grade internet :rocket:
+
+___
+
+*In the following section, we'll be going more in-depth inside Redcloud's design concepts. You can get started without having to dive inside though.*
+
+___
+
+* :book: **Table of contents**
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Quick Start](#quick-start)
+  - [Details](#details)
+    - [Redcloud Architecture](#redcloud-architecture)
+    - [Deployment workflow](#deployment-workflow)
+    - [Networks](#networks)
+    - [Volumes](#volumes)
+    - [Accessing containers from the terminal](#accessing-containers-from-the-terminal)
+    - [Accessing files](#accessing-files)
+    - [SSL Certificates](#ssl-certificates)
+    - [Stopping Redcloud](#stopping-redcloud)
+    - [Portainer App Templates](#portainer-app-templates)
+    - [Traefik reverse-proxy](#traefik-reverse-proxy)
+    - [Redcloud security considerations](#redcloud-security-considerations)
+  - [Tested deployment candidates](#tested-deployment-candidates)
+  - [Troubleshooting](#troubleshooting)
+  - [Use-cases](#use-cases)
+  - [Screenshots](#screenshots)
+  - [Contribution guideline](#contribution-guideline)
+  - [Hosting Redcloud](#hosting-redcloud)
+  - [Inspirations & Shout-outs](#inspirations--shout-outs)
+
+___
+
+## Details
+
+### Redcloud Architecture
+
+* `redcloud.py`: Starts/Stops the Web interface and App Templates, using Docker and Portainer.
+* `portainer`: Portainer web interface.
+* `traefik`: Traefik reverse-proxy container to the web interface, api and files containers. Some templates have pre-configured routes for convenience. See the `templates.yml`. 
+* `templates`: python3 `http.server` container that feeds the App Templates. Lives in an "inside" network.
+* `cert_gen`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using common best practices.
+* https://your-server-ip/portainer: Redcloud Web interface once deployed.
+* https://your-server-ip/files: Redcloud `redcloud_files` volume. You can also access the `redcloud_log` container content, protected by the same `.htpasswd` as Traefik. Default credentials: `admin:Redcloud`
+* https://your-server-ip/api: Traefik reverse-proxy health monitoring page. Shows live stats about routes, backends, return codes. Will also show reverse-callback implant data if configured through Traefik.
+
+
+### Deployment workflow
+
 
 **Redcloud deployment workflow is as follows:**
 1. Clone/Download Redcloud repository.
@@ -128,69 +199,10 @@ ___
    d. Use a web shell to interact with your container.  
    e. Depending on the App Template, use either `bash` or `sh`. Choose accordingly from the drop-down menu.  
 
-___
 
-**Briefly,**
-
-`redcloud.py` deploys a [Portainer](https://www.portainer.io/) stack, **preloaded with many tool templates for your offensive engagements**, powered by Docker. Once deployed, use the [web interface](#screenshots) to manage it. Uses [Traefik](https://traefik.io/) as reverse-proxy. Easy remote deploy to your target server using the system `ssh` and even `docker-machine`. 
-  
-
-* :rocket: Ever wanted to spin up a Kali in a cloud with just a few clicks?  
-* :package: Have clean silos between your tools, technics and stages?  
-* :ambulance: Monitor the health of your scans and C2?  
-* :fire: Skip those sysadmin tasks for setting up a phishing campaign and get pwning faster?  
-* :smiling_imp: Curious how you would build *the* ideal attack infrastructure?
-
-
-Use the web UI to monitor, manage, and **interact with each container**. Use the snappy web terminal just as you would with yours. Create volumes, networks and port forwards using Portainer's simple UI.
-
-Use all your favorite tools and technics with the power of data-center-grade internet :rocket:
-
-___
-
-*In the following section, we'll be going more in-depth inside Redcloud's design concepts. You can get started without having to dive inside though.*
-
-___
-
-* :book: **Table of contents**
-  - [Redcloud](#redcloud)
-    - [Introduction](#introduction)
-    - [Features](#features)
-    - [Quick Start](#quick-start)
-    - [Details](#details)
-      - [Redcloud Architecture](#redcloud-architecture)
-      - [Networks](#networks)
-      - [Volumes](#volumes)
-      - [Accessing containers from the terminal](#accessing-containers-from-the-terminal)
-      - [Accessing files](#accessing-files)
-      - [SSL Certificates](#ssl-certificates)
-      - [Stopping Redcloud](#stopping-redcloud)
-      - [Portainer App Templates](#portainer-app-templates)
-      - [Traefik reverse-proxy](#traefik-reverse-proxy)
-      - [Redcloud security considerations](#redcloud-security-considerations)
-    - [Tested deployment candidates](#tested-deployment-candidates)
-    - [Troubleshooting](#troubleshooting)
-    - [Use-cases](#use-cases)
-    - [Screenshots](#screenshots)
-    - [Contribution guideline](#contribution-guideline)
-    - [Hosting Redcloud](#hosting-redcloud)
-    - [Inspirations & Shout-outs](#inspirations--shout-outs)
-
-___
-
-## Details
-
-### Redcloud Architecture
-
-* `redcloud.py`: Starts/Stops the Web interface and App Templates, using Docker and Portainer.
-* `portainer`: Portainer web interface.
-* `traefik`: Traefik reverse-proxy container to the web interface, api and files containers. Some templates have pre-configured routes for convenience. See the `templates.yml`. 
-* `templates`: python3 `http.server` container that feeds the App Templates. Lives in an "inside" network.
-* `cert_gen`: The [omgwtfssl](https://github.com/paulczar/omgwtfssl) container that generates the SSL certificates using common best practices.
-* https://your-server-ip/portainer: Redcloud Web interface once deployed.
-* https://your-server-ip/files: Redcloud `redcloud_files` volume. You can also access the `redcloud_log` container content, protected by the same `.htpasswd` as Traefik. Default credentials: `admin:Redcloud`
-* https://your-server-ip/api: Traefik reverse-proxy health monitoring page. Shows live stats about routes, backends, return codes. Will also show reverse-callback implant data if configured through Traefik.
-
+<p align="center">
+  <img src="https://i.imgur.com/2rdYzby.png" width="540" title="Redcloud menu">
+</p>
 
 ### Networks
 
@@ -363,8 +375,8 @@ ___
 
 ## Screenshots
 
-* Template List + `redcloud.py` deploy
-![](https://i.imgur.com/j8YFjtw.png)
+* Template List
+![](https://i.imgur.com/8ndvrpq.png)
 
 * Deploying a container
 ![](https://i.imgur.com/QCR1yHp.png)
@@ -372,6 +384,13 @@ ___
 
 * Using Metasploit's `msfconsole` through the web interface
 ![](https://i.imgur.com/wUcFHbh.png)
+
+
+* Traefik real-time data on reverse-proxy routes
+![api](https://i.imgur.com/gWaeykt.png)
+
+* Deploying using ssh
+![](https://i.imgur.com/W3nTrpF.png)
 
 ___
 
