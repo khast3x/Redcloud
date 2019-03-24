@@ -97,10 +97,23 @@ Redcloud has 3 different deployment methods:
 
 ___
 
+<h4 align="center">
+  <b>SSH Deploy</b> 
+  <br>
+  <br>
+
+</h4>
+
 <p align="center">
-  <img src="https://i.imgur.com/W3nTrpF.png" width="540" title="Redcloud menu">
+  <img src="https://i.imgur.com/YGQBZlf.png" width="540" title="Redcloud menu">
 </p>
 
+<h4 align="center">
+  <b>Templates</b> 
+  <br>
+  <br>
+
+</h4>
 <p align="center">
   <img src="https://i.imgur.com/8ndvrpq.png" width="540" title="Redcloud templates">
 </p>
@@ -390,7 +403,7 @@ ___
 ![api](https://i.imgur.com/gWaeykt.png)
 
 * Deploying using ssh
-![](https://i.imgur.com/W3nTrpF.png)
+![](https://i.imgur.com/YGQBZlf.png)
 
 ___
 
