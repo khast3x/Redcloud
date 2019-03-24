@@ -389,22 +389,29 @@ ___
 ## Screenshots
 
 * Template List
-![](https://i.imgur.com/8ndvrpq.png)
+<p align="center">
+  <img src="https://i.imgur.com/8ndvrpq.png" width="540" title="Redcloud templates">
+</p>
 
 * Deploying a container
-![](https://i.imgur.com/QCR1yHp.png)
-
+<p align="center">
+  <img src="https://i.imgur.com/QCR1yHp.png" width="540" title="Redcloud container">
+</p>
 
 * Using Metasploit's `msfconsole` through the web interface
-![](https://i.imgur.com/wUcFHbh.png)
-
+<p align="center">
+  <img src="https://i.imgur.com/wUcFHbh.png" width="540" title="Redcloud msf">
+</p>
 
 * Traefik real-time data on reverse-proxy routes
-![api](https://i.imgur.com/gWaeykt.png)
+<p align="center">
+  <img src="https://i.imgur.com/gWaeykt.png" width="540" title="Traefik api">
+</p>
 
 * Deploying using ssh
-![](https://i.imgur.com/YGQBZlf.png)
-
+<p align="center">
+  <img src="https://i.imgur.com/YGQBZlf.png" width="540" title="redcloud python">
+</p>
 ___
 
 ## Contribution guideline
