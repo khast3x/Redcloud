@@ -90,7 +90,7 @@ If not, simply run:
 > pip install -r requirements.txt
 ```
 
-The Redcloud menu offers 3 different deployment methods:
+Redcloud has 3 different deployment methods:
 1. **Locally**
 2. **Remotely, using ssh**. Requires having your public key in your target's `authorized_keys` file.
 3. **Remotely, using docker-machine**. Run the `eval (docker-machine env deploy_target)` line to preload your env with your docker-machine, and run `redcloud.py`. Redcloud should automatically detect your docker-machine, and highlight menu items relevant to a docker-machine deployment.
@@ -121,12 +121,12 @@ ___
 4. Select "Deploy the container".
 5. Portainer will launch the container. It may take a few minutes if it needs to fetch the image. If your server is in a data center, this step will be very fast.
 6. Container should be running :rocket:
-7. Portainer will redirect you to the "Containers" page. From there, you can:
-   a. View live container logs.
-   b. Inspect container details (`docker inspect`).
-   c. View live container stats (memory/cpu/network/processes).
-   d. Use a web shell to interact with your container.
-   e. Depending on the App Template, use either `bash` or `sh`. Choose accordingly from the drop-down menu.
+7. Portainer will redirect you to the "Containers" page. From there, you can:  
+   a. View live container logs.  
+   b. Inspect container details (`docker inspect`).  
+   c. View live container stats (memory/cpu/network/processes).  
+   d. Use a web shell to interact with your container.  
+   e. Depending on the App Template, use either `bash` or `sh`. Choose accordingly from the drop-down menu.  
 
 ___
 
@@ -243,7 +243,7 @@ If using `attach`, the container needs to be started in `interactive mode`, so a
 
 ### Accessing files
 
-Point your browser to `https://your-redcloud-ip`.  
+Point your browser to `https://your-redcloud-ip/files`.  
 Please refer to the `files` volume for more information.
 
 ### SSL Certificates
@@ -270,7 +270,7 @@ The *local* and *docker-machine* stop option is the same, thus they are combined
 ### Portainer App Templates
 
 Redcloud uses Portainer to orchestrate and interface with the Docker engine. Portainer in itself is a fantastic project to manage Docker deployments remotely. Portainer also includes a very convenient [template system](https://portainer.readthedocs.io/en/stable/templates.html), which is the major component for our Redcloud deployment.  
-Templates can be found in `./templates/templates.yml`. Portainer fetches the template file from a dedicated NGINX container (`templates`).
+Templates can be found in `./templates/templates.yml`. Portainer fetches the template file from a dedicated container (`templates`).
 
 ### Traefik reverse-proxy
 Traefik is a wonderful "cloud-native edge router". It has replaced the previous NGINX reverse-proxy setup.  
@@ -288,7 +288,7 @@ From the Traefik api web interface, you can view your deployed routes, monitor h
 
 
 
-You can add additional labels that tell Traefik where to route traffic, using:
+You can add additional labels that tell Traefik where to route traffic, using either:
 * `traefik/traefik.toml` file
 * `docker-compose.yml` file
 * `templates.yml` file
@@ -311,7 +311,7 @@ However, the default network exposes your containers' ports to the outside world
 You can:
 * Add custom `labels` to create routes with Traefik. See the `docker-compose.yml` file for inspiration.
 * Start an Ubuntu+noVNC (VNC through http) from template, add it to both an "inside" and "outside" network, and access exposed interfaces from inside.
-* Add .htaccess configurations. Some are planned in further Redcloud development.
+* Add .htaccess configurations
 
 Additionally:  
 * `docker` & `docker-machine` installations require root privileges. You can downgrade privilege requirements following [the official documentation](https://docs.docker.com/install/linux/linux-postinstall/).
@@ -389,7 +389,7 @@ ___
 
 ## Hosting Redcloud
 
-You can host a Redcloud on any Unix server that runs Docker.  
+You can host Redcloud on any Unix server that runs Docker.  
 Redcloud is intended to be used in a cloud environment, such as a simple VPS with ssh, or even an AWS EC2, GCP, etc...
 
 A large range of cloud providers offer **free credits** to get familiar with their services. Many lists and tutorials cover getting free hosting credits from major vendors. [This list is a good place to start](https://github.com/ripienaar/free-for-dev#iaas).
