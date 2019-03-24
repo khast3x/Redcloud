@@ -23,7 +23,7 @@ ___
 
 ## Introduction
 
-Redcloud is a powerful and user-friendly toolbox for deploying a fully featured **Red Team Infrastructure** using Docker. Deploys in minutes. Use and manage it with its [polished web interface](#screenshots).  
+Redcloud is a powerful and user-friendly toolbox for deploying a fully featured **Red Team Infrastructure** using Docker. Harness the cloud's speed for your tools. Deploys in minutes. Use and manage it with its [polished web interface](#screenshots).  
 
 Ideal for your penetration tests, shooting ranges, red teaming and bug bounties!  
   
