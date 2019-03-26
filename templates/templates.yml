@@ -247,6 +247,22 @@
       "6901:6901/tcp"
       ]    
   },
+  {  
+    "type": 1,
+    "title": "Kali Web noVNC + LXDE",
+    "platform": "linux",
+    "network": "redcloud_default",
+    "description": "Kali Docker container with minimal LXDE",
+    "name": "red_kali-vnc",
+    "logo": "https://i.imgur.com/tmLEP0b.jpg",
+    "note": "From your web browser: http://your-docker-machine-ip:6080",
+    "image": "jgamblin/kalibrowser-lxde",
+    "restart_policy": "unless-stopped",
+    "categories": ["offensive", "bare", "utils"],
+    "ports": [
+      "6080:6080/tcp"
+      ]    
+  },  
   {
     "type": 1,
     "title": "DVWA",
@@ -278,6 +294,83 @@
     "ports": [
       "8084:3000/tcp"
     ]    
+  },
+  {   
+    "type": 1,
+    "title": "Vulnerable Wordpress",
+    "platform": "linux",
+    "network": "redcloud_default",
+    "description": "Vulnerable WordPress Installation",
+    "name": "red_vuln-wp",
+    "logo": "https://i.imgur.com/0DpXEE4.png",
+    "note": "Point your browser to http://your-docker-machine-ip:8085 to access it.",
+    "image": "wpscanteam/vulnerablewordpress",
+    "restart_policy": "unless-stopped",
+    "categories": ["vulnerable", "webserver"],
+    "ports": [
+      "8085:80/tcp",
+      "3306:3306/tcp"
+    ]    
+  },
+  {   
+    "type": 1,
+    "title": "Vulnerable Shellshock",
+    "platform": "linux",
+    "network": "redcloud_default",
+    "description": "Vulnerable Shellshock Installation - CVE-2014-6271",
+    "name": "red_vuln-shellshock",
+    "logo": "https://i.imgur.com/waYl54r.png",
+    "note": "Point your browser to http://your-docker-machine-ip:8086 to access it.",
+    "image": "hmlio/vaas-cve-2014-6271",
+    "restart_policy": "unless-stopped",
+    "categories": ["vulnerable", "webserver"],
+    "ports": [
+      "8086:80/tcp"
+    ]    
+  },
+{   
+    "type": 1,
+    "title": "Vulnerable SambaCry",
+    "platform": "linux",
+    "network": "redcloud_default",
+    "description": "Vulnerable Samba Installation - CVE-2017-7494",
+    "name": "red_vuln-samba",
+    "logo": "https://media.ilsoftware.it/images/500x500/img_15843.jpg",
+    "note": "If you want to access, use the following credentials. User: sambacry Password: nosambanocry",
+    "image": "hmlio/vulnerables/cve-2017-7494",
+    "restart_policy": "unless-stopped",
+    "categories": ["vulnerable", "smb"],
+    "ports": [
+      "445:445/tcp",
+      "137-139:137-139/tcp",
+      "6699:6699/tcp"
+    ]    
+  },
+  {   
+    "type": 1,
+    "title": "OWASP Mutillidae II",
+    "platform": "linux",
+    "network": "redcloud_default",
+    "description": "Docker container for OWASP Mutillidae II Web Pen-Test Practice Application",
+    "name": "red_vuln-mutillidae",
+    "logo": "https://i.imgur.com/SFDsPDQ.jpg",
+    "note": "Point your browser to http://your-docker-machine-ip:8087 to access it.",
+    "image": "citizenstig/nowasp",
+    "restart_policy": "unless-stopped",
+    "categories": ["vulnerable", "smb"],
+    "ports": [
+      "8087:80/tcp",
+      "3306:3306/tcp"
+    ],
+    "env": [
+      {
+        "name": "MYSQL_PASS",
+        "label": "Database root password",
+        "description": "Password used by the MySQL root user.",
+        "default": "Chang3ME!",
+        "preset": false
+      }
+    ]
   },
   {   
     "type": 1,
@@ -339,6 +432,21 @@
     "image": "d3lta/endlessh-docker",
     "ports": [
       "2223:22/tcp"
+    ]
+},
+{
+    "type": 1,
+    "title": "Beagle",
+    "name": "red_beagle",
+    "network": "redcloud_default",
+    "description": "Incident response and digital forensics tool which transforms data sources and logs into graphs. Supported data sources include FireEye HX Triages, Windows EVTX files, SysMon logs and Raw Windows memory images.",
+    "note": "Point your browser to http://your-docker-machine-ip:8000 to access it.",
+    "categories": ["utils", "dfir", "osint"],
+    "platform": "linux",
+    "logo": "https://i.imgur.com/QDBYkY1.jpg",
+    "image": "yampelo/beagle",
+    "ports": [
+      "8000:8000/tcp"
     ]
 },
   {

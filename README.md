@@ -334,8 +334,9 @@ Redcloud deploys with a self-signed https certificate, and proxies all interacti
 However, the default network exposes your containers' ports to the outside world.
 
 You can:
+* **Remove exposed ports** and access the normal port from a machine inside the docker network
 * Add custom `labels` to create routes with Traefik. See the `docker-compose.yml` file for inspiration.
-* Start an Ubuntu+noVNC (VNC through http) from template, add it to both an "inside" and "outside" network, and access exposed interfaces from inside.
+* Start an Ubuntu or Kali with noVNC (VNC through http) from templates, add it to both an "inside" and "outside" network, and access exposed interfaces from inside.
 * Add .htaccess configurations
 
 Additionally:  
