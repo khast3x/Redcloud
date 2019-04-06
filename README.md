@@ -447,7 +447,7 @@ ___
 * [Red Baron](https://github.com/Coalfire-Research/Red-Baron) - Coalfire Research
 * [Rapid Attack Infrastructure](https://github.com/obscuritylabs/RAI) - Obscurity Labs
 * [Decker](https://github.com/stevenaldinger/decker) - Steven Aldinger
-* [HideNSeek](https://github.com/rmikehodges/hideNsneak) - Mike Hodges
+* [hideNsneak](https://github.com/rmikehodges/hideNsneak) - Mike Hodges
 
 ___
 *Finally, if you wish to see your tool integrated, hit me up on Twitter. This project is maintained on my free time. Keep an eye out in the dev branch for upcoming features.  
