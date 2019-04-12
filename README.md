@@ -1,8 +1,6 @@
- <h1 align="center">
-  <br>
-  Redcloud
-</h1>
-
+<p align="center">
+  <img src="https://i.postimg.cc/Dyfz8Q1p/Redcloud-Logo.png" width="540" title="Redcloud menu">
+</p>
 <h4 align="center">
   <i>Weather report. Cloudy with a chance of shells!</i> 
   <br>
@@ -18,7 +16,7 @@ Early release. Follow me on [Twitter](https://twitter.com/kh4st3x) to stay updat
 :information_desk_person::cloud::shell::seedling:
 
 ___
- :small_orange_diamond: [Quick Start](#quick-start) :small_orange_diamond: [Redcloud architecture](#redcloud-architecture) :small_orange_diamond: [Use-cases](#use-cases)  :small_orange_diamond: [Screenshots](#screenshots) :small_orange_diamond:
+ [Quick Start](#quick-start) - [Architecture](#redcloud-architecture) - [Use-cases](#use-cases)  - [Screenshots](#screenshots)
 ___
 
 ## Introduction
@@ -98,17 +96,6 @@ Redcloud has 3 different deployment methods:
 ___
 
 <h4 align="center">
-  <b>SSH Deploy</b> 
-  <br>
-  <br>
-
-</h4>
-
-<p align="center">
-  <img src="https://i.imgur.com/YGQBZlf.png" width="540" title="Redcloud menu">
-</p>
-
-<h4 align="center">
   <b>Templates</b> 
   <br>
   <br>
@@ -122,7 +109,7 @@ ___
 
 **Briefly,**
 
-`redcloud.py` deploys a [Portainer](https://www.portainer.io/) stack, **preloaded with many tool templates for your offensive engagements**, powered by Docker. Once deployed, use the [web interface](#screenshots) to manage it. Uses [Traefik](https://traefik.io/) as reverse-proxy. Easy remote deploy to your target server using the system `ssh` and even `docker-machine`. 
+`redcloud.py` deploys a [Portainer](https://www.portainer.io/) stack, **preloaded with many tool templates for your offensive engagements**, powered by Docker. Once deployed, control Redcloud with the [web interface](#screenshots). Uses [Traefik](https://traefik.io/) as reverse-proxy. Easy remote deploy to your target server using the system `ssh` or `docker-machine`. 
   
 
 * :rocket: Ever wanted to spin up a Kali in a cloud with just a few clicks?  
@@ -134,7 +121,7 @@ ___
 
 Use the web UI to monitor, manage, and **interact with each container**. Use the snappy web terminal just as you would with yours. Create volumes, networks and port forwards using Portainer's simple UI.
 
-Use all your favorite tools and technics with the power of data-center-grade internet :rocket:
+Deploy and handle all your favorite tools and technics with the power of data-center-grade internet :rocket:
 
 ___
 
@@ -448,6 +435,9 @@ ___
 * [Rapid Attack Infrastructure](https://github.com/obscuritylabs/RAI) - Obscurity Labs
 * [Decker](https://github.com/stevenaldinger/decker) - Steven Aldinger
 * [hideNsneak](https://github.com/rmikehodges/hideNsneak) - Mike Hodges
+
+
+* [@Ullaakut](https://twitter.com/Ullaakut) for the logo - Make sure you check out his [repo](https://github.com/Ullaakut)!
 
 ___
 *Finally, if you wish to see your tool integrated, hit me up on Twitter. This project is maintained on my free time. Keep an eye out in the dev branch for upcoming features.  
