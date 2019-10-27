@@ -8,7 +8,9 @@ DOCKER_DOWN = "docker-compose down --remove-orphans"
 # DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh ; sh get-docker.sh"
 DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh"
 DOCKER_INSTALL2 = "sh get-docker.sh"
-DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose ; chmod +x /usr/local/bin/docker-compose "
+# DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose"
+DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-{u_s}-{u_m} -o /usr/local/bin/docker-compose"
+DOCKER_COMPOSE_INSTALL2 = "chmod +x /usr/local/bin/docker-compose"
 REDCLOUD_INSTALL_GIT = "git clone https://github.com/khast3x/redcloud.git"
 REDCLOUD_INSTALL_SCP = "scp -r ../redcloud {target}:~/"
 SSH_OR = " || echo \"error\""
@@ -63,6 +65,15 @@ def is_tool(name):
     return find_executable(name) is not None
 
 
+
+def get_unames():
+    # $(uname -s)-$(uname -m)
+    uname_s = run_cmd_output("uname -s")
+    uname_m = run_cmd_output("uname -m")
+    final_cmd = DOCKER_COMPOSE_INSTALL.format(u_s=uname_s, u_m=uname_m)
+    print(final_cmd)
+    return final_cmd
+
 def run_cmd_output(cmd):
     '''
     Runs local command to shell, returns output. Splits string to tab before giving args to subprocess
@@ -113,10 +124,13 @@ def install_docker_compose(prefix = ""):
     Runs the command to install docker-compose. Can run with the SSH prefix to install remotly
     Keep both seperated for later debugging
     '''
+    cmd = get_unames()
     if len(prefix) != 0:
-        output = run_cmd_output(prefix + DOCKER_COMPOSE_INSTALL)
+        output = run_cmd_output(prefix + cmd)
+        output += run_cmd_output(prefix + DOCKER_COMPOSE_INSTALL2)
     else:
-        output = run_cmd_output(DOCKER_COMPOSE_INSTALL)
+        output = run_cmd_output(cmd)
+        output += run_cmd_output(DOCKER_COMPOSE_INSTALL2)
     print(output)
 
 def deploy_local():
@@ -154,7 +168,7 @@ def deploy_local():
         if dockerq == "n":
             c.info_news(c, "Skipping...")
         else:
-            c.info_news(c, "Installing docker")
+            c.info_news(c, "Installing docker-composetoto")
             install_docker_compose()
             if is_tool("docker-compose"):
                 c.good_news(c, "docker-compose installation finished successfully")
@@ -298,7 +312,7 @@ def deploy_dockermachine():
         if dockerq == "n":
             c.info_news(c, "Skipping...")
         else:
-            c.info_news(c, "Installing docker")
+            c.info_news(c, "Installing docker-compose")
             install_docker_compose()
             if is_tool("docker-compose"):
                 c.good_news(c, "docker-compose installation finished sucessfully")
