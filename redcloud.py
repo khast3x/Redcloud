@@ -5,7 +5,9 @@ from utils.colors import colors as c
 
 DOCKER_DEPLOY = "docker-compose up --build -d"
 DOCKER_DOWN = "docker-compose down --remove-orphans"
-DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh ; sh get-docker.sh"
+# DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh ; sh get-docker.sh"
+DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh"
+DOCKER_INSTALL2 = "sh get-docker.sh"
 DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose ; chmod +x /usr/local/bin/docker-compose "
 REDCLOUD_INSTALL_GIT = "git clone https://github.com/khast3x/redcloud.git"
 REDCLOUD_INSTALL_SCP = "scp -r ../redcloud {target}:~/"
@@ -66,7 +68,7 @@ def run_cmd_output(cmd):
     Runs local command to shell, returns output. Splits string to tab before giving args to subprocess
     '''
     try:
-        output = subprocess.check_output(cmd.split(" "), stderr=subprocess.STDOUT)
+        output = subprocess.check_output(cmd.split(" "), stderr=sys.stdout.buffer)
         output = output.decode("utf-8").strip()
         return output
     except subprocess.CalledProcessError as e:
@@ -100,8 +102,10 @@ def install_docker(prefix = ""):
 
     if len(prefix) != 0:
         output = run_cmd_output(prefix + DOCKER_INSTALL)
+        output += run_cmd_output(prefix + DOCKER_INSTALL2)
     else:
         output = run_cmd_output(DOCKER_INSTALL)
+        output += run_cmd_output(DOCKER_INSTALL2)
     print(output)
 
 def install_docker_compose(prefix = ""):
@@ -219,7 +223,7 @@ def deploy_remote_ssh():
     elif output == "error":
         c.bad_news(c, "docker installation not found")
         c.question_news(c, "Install docker? [Y/n]")
-        dockerq = input(">> ")
+        dockerq = input(">> ") 
         if dockerq == "n":
             c.info_news(c, "Skipping...")
         else:
