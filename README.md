@@ -439,7 +439,7 @@ ___
 
 * [@Ullaakut](https://twitter.com/Ullaakut) for the logo - Make sure you check out his [repo](https://github.com/Ullaakut)!
 
-___    
+___
 *Finally, if you wish to see your tool integrated, hit me up on Twitter. This project is maintained on my free time. Keep an eye out in the dev branch for upcoming features.  
 Redcloud was originally developed to make deploying training environments for infosec students easier.*
 
