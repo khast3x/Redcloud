@@ -5,14 +5,8 @@ from utils.colors import colors as c
 
 DOCKER_DEPLOY = "docker-compose up --build -d"
 DOCKER_DOWN = "docker-compose down --remove-orphans"
-# DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh ; sh get-docker.sh"
-DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh"
-DOCKER_INSTALL2 = "sh get-docker.sh"
-DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o docker-compose ; chmod +x docker-compose ; mv docker-compose /usr/local/bin/"
-# DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose"
-# DOCKER_COMPOSE_INSTALL2 = "chmod +x /usr/local/bin/docker-compose"
-
-
+DOCKER_INSTALL = "curl -fsSL https://get.docker.com -o get-docker.sh ; sh get-docker.sh"
+DOCKER_COMPOSE_INSTALL = "curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose ; chmod +x /usr/local/bin/docker-compose "
 REDCLOUD_INSTALL_GIT = "git clone https://github.com/khast3x/redcloud.git"
 REDCLOUD_INSTALL_SCP = "scp -r ../redcloud {target}:~/"
 SSH_OR = " || echo \"error\""
@@ -67,35 +61,17 @@ def is_tool(name):
     return find_executable(name) is not None
 
 
-# def run_cmd_output(cmd):
-#     '''
-#     Runs local command to shell, returns output. Splits string to tab before giving args to subprocess
-#     '''
-#     try:
-#         # output = subprocess.check_output(cmd.split(" "), stderr=subprocess.STDOUT, text=True)
-#         output = subprocess.check_output(cmd.split(" "), stderr=sys.stdout.buffer, text=True)
-        
-#         # output = output.decode("utf-8").strip()
-#         return output
-#     except subprocess.CalledProcessError as e:
-#         c.bad_news(c, "Something went wrong with running command")
-#         print(e)
-
 def run_cmd_output(cmd):
+    '''
+    Runs local command to shell, returns output. Splits string to tab before giving args to subprocess
+    '''
     try:
-        tmp_cmd = open("tmp_cmd2.sh", "w")
-        tmp_cmd.write(cmd)
-        tmp_cmd.close()
-        outputtmp = subprocess.check_output(["chmod", "+x", "tmp_cmd2.sh"], stderr=sys.stdout.buffer)
-        output = subprocess.check_output(["sh", "tmp_cmd2.sh"], stderr=sys.stdout.buffer)
+        output = subprocess.check_output(cmd.split(" "), stderr=subprocess.STDOUT)
         output = output.decode("utf-8").strip()
-        os.remove("tmp_cmd2.sh")
         return output
-
     except subprocess.CalledProcessError as e:
         c.bad_news(c, "Something went wrong with running command")
         print(e)
-
 
 def list_available():
     '''
@@ -126,7 +102,6 @@ def install_docker(prefix = ""):
         output = run_cmd_output(prefix + DOCKER_INSTALL)
     else:
         output = run_cmd_output(DOCKER_INSTALL)
-        output += run_cmd_output(DOCKER_INSTALL2)
     print(output)
 
 def install_docker_compose(prefix = ""):
@@ -139,7 +114,6 @@ def install_docker_compose(prefix = ""):
     else:
         output = run_cmd_output(DOCKER_COMPOSE_INSTALL)
     print(output)
-
 
 def deploy_local():
     '''
@@ -176,7 +150,7 @@ def deploy_local():
         if dockerq == "n":
             c.info_news(c, "Skipping...")
         else:
-            c.info_news(c, "Installing docker-compose")
+            c.info_news(c, "Installing docker")
             install_docker_compose()
             if is_tool("docker-compose"):
                 c.good_news(c, "docker-compose installation finished successfully")
