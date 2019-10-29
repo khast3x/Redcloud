@@ -62,7 +62,7 @@ services:
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - /tmp/portainer/data:/data
-      command:  --host=unix:///var/run/docker.sock --logo "https://i.postimg.cc/h4w2WjZT/rcbanner.png" --templates "http://templates/templates.yml"
+      command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/kfi99Po.png" --templates "http://templates/templates.yml"
 
       labels:
         - "traefik.frontend.rule=PathPrefixStrip:/portainer"
