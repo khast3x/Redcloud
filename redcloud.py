@@ -174,12 +174,12 @@ def deploy_local():
                 c.good_news(c, "docker-compose installation finished successfully")
 
     # Check Portainer persistent data
-    if os.path.isdir("/opt/portainer/data"):
+    if os.path.isdir("/tmp/portainer/data"):
         c.question_news(c, "Portainer data detected, a user/pass already exists. Remove? [N/y]")
         choice = input(">> ")
         if choice == "y":
             import shutil
-            shutil.rmtree("/opt/portainer/data")
+            shutil.rmtree("/tmp/portainer/data")
             c.good_news(c, "Deleted portainer data")
 
     # Start deploy
@@ -411,5 +411,8 @@ if __name__ == "__main__":
     if sys.version_info[0] < 3:
         raise Exception("\n\n\n==  Must be using Python 3  ==\n")
     print_banner()
-    
+    if "bash" not in os.getenv("SHELL"):
+        c.info_news(c, "protip: redcloud works better using bash or sh")
+    if not os.geteuid()==0:
+        c.info_news(c, "protip: root on candidate is required to install docker")
     menu_deploy_target()
