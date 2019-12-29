@@ -262,7 +262,20 @@
     "ports": [
       "6080:6080/tcp"
       ]    
-  },  
+  },
+  {
+    "type": 1,
+    "network": "redcloud_default",
+    "title": "Lockdoor Framework",
+    "platform": "linux",
+    "description": "Lockdoor Framework : A Penetration Testing framework with Cyber Security Resources",
+    "name": "red_lockdoor",
+    "interactive": true,
+    "logo": "https://i.imgur.com/B5uKiEv.png",
+    "image": "sofianehamlaoui/lockdoor",
+    "categories": ["offensive", "privacy"],
+    "restart_policy": "unless-stopped"
+  },
   {
     "type": 1,
     "title": "DVWA",
