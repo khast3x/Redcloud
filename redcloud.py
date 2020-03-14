@@ -66,10 +66,10 @@ def is_tool(name):
 
 
 
-def get_unames():
+def get_unames(prefix = ""):
     # $(uname -s)-$(uname -m)
-    uname_s = run_cmd_output("uname -s")
-    uname_m = run_cmd_output("uname -m")
+    uname_s = run_cmd_output(prefix + "uname -s")
+    uname_m = run_cmd_output(prefix + "uname -m")
     final_cmd = DOCKER_COMPOSE_INSTALL.format(u_s=uname_s, u_m=uname_m)
     print(final_cmd)
     return final_cmd
@@ -124,7 +124,7 @@ def install_docker_compose(prefix = ""):
     Runs the command to install docker-compose. Can run with the SSH prefix to install remotly
     Keep both seperated for later debugging
     '''
-    cmd = get_unames()
+    cmd = get_unames(prefix)
     if len(prefix) != 0:
         output = run_cmd_output(prefix + cmd)
         output += run_cmd_output(prefix + DOCKER_COMPOSE_INSTALL2)
