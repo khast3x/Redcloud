@@ -1,4 +1,4 @@
 FROM aikain/simplehttpserver:0.1
-COPY templates.yml /var/www/
+COPY templates.json /var/www/
 
 CMD python3 -m http.server 80
