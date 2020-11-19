@@ -55,14 +55,14 @@ services:
   
   
   portainer:
-      image: portainer/portainer
+      image: portainer/portainer-ce
       container_name: "portainer-app"
       networks:
         - inside
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - /tmp/portainer/data:/data
-      command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/kfi99Po.png" --templates "http://templates/templates.yml"
+      command:  --host=unix:///var/run/docker.sock --logo "https://i.imgur.com/kfi99Po.png" --templates "http://templates/templates.json"
 
       labels:
         - "traefik.frontend.rule=PathPrefixStrip:/portainer"
