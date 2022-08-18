@@ -1,5 +1,8 @@
-[
-  {
+{
+  "version":"2",
+  "templates": [
+
+{
     "type": 1,
     "platform": "linux",
     "network": "redcloud_default",
@@ -742,6 +745,5 @@
       }
     ]
   }
-
-
 ]
+}
